@@ -1,7 +1,7 @@
 import React from "react";
 import { IoGitCompare } from "react-icons/io5";
 import { FaPlus, FaTrash } from "react-icons/fa";
-import { pokekemonTypeInterface, userPokemonType } from "../utils/Types";
+import { pokemonTypeInterface, userPokemonType } from "../utils/Types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { addToCompare } from "../app/slices/PokemonSlice";
@@ -50,7 +50,7 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonType[] }) {
                 />
                 <div className="pokemon-card-types">
                   {data.types.map(
-                    (type: pokekemonTypeInterface, index: number) => {
+                    (type: pokemonTypeInterface, index: number) => {
                       const keys = Object.keys(type);
                       return (
                         <div className="pokemon-card-types-type" key={index}>
