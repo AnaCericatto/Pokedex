@@ -23,10 +23,6 @@ function Navbar() {
       name: "My List",
       route: "/list",
     },
-    {
-      name: "About",
-      route: "/about",
-    },
   ];
 
   useEffect(() => {

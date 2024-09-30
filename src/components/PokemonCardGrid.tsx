@@ -4,8 +4,11 @@ import { FaPlus, FaTrash } from "react-icons/fa";
 import { pokemonTypeInterface, userPokemonType } from "../utils/Types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
-import { addToCompare } from "../app/slices/PokemonSlice";
-import { setToast } from "../app/slices/AppSlice";
+import { addToCompare, setCurrentPokemon } from "../app/slices/PokemonSlice";
+import { setPokemonTab, setToast } from "../app/slices/AppSlice";
+import { addPokemonToList } from "../app/reducers/addPokemonToList";
+import { removePokemon } from "../app/reducers/removePokemonFromUserList";
+import { pokemonTabs } from "../utils/Constants";
 
 function PokemonCardGrid({ pokemons }: { pokemons: userPokemonType[] }) {
   const location = useLocation();
@@ -23,9 +26,18 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonType[] }) {
                 <div className="pokemon-card-list">
                   {location.pathname.includes("/pokemon") ||
                   location.pathname.includes("/search") ? (
-                    <FaPlus className="plus" />
+                    <FaPlus
+                      className="plus"
+                      onClick={() => dispach(addPokemonToList(data))}
+                    />
                   ) : (
-                    <FaTrash className="trash" />
+                    <FaTrash
+                      className="trash"
+                      onClick={() => {
+                        dispach(removePokemon({ id: data.firebaseId! }));
+                        dispach(setToast("Pokemon removed successfully"));
+                      }}
+                    />
                   )}
                 </div>
                 <div className="pokemon-card-compare">
@@ -46,7 +58,11 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonType[] }) {
                   alt="pokemon sprite"
                   className="pokemon-card-image"
                   loading="lazy"
-                  onClick={() => navigate(`/pokemon/${data.id}`)}
+                  onClick={() => {
+                    dispach(setPokemonTab(pokemonTabs.description));
+                    dispach(setCurrentPokemon(undefined));
+                    navigate(`/pokemon/${data.id}`);
+                  }}
                 />
                 <div className="pokemon-card-types">
                   {data.types.map(
