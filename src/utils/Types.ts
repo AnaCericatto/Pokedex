@@ -19,6 +19,7 @@ export interface currentPokemonType {
   image: string;
   stats: pokemonStatsType[];
   encounters: string[];
+  evolutionLevel: number;
   evolution: { level: number; pokemon: { name: string; url: string } }[];
   pokemonAbilities: { abilities: string[]; moves: string[] };
 }
